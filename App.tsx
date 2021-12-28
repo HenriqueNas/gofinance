@@ -9,9 +9,10 @@ import {
 } from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
 
-import { Dashboard } from './src/screens/Dashboard/intex';
+import { Dashboard } from './src/screens/Dashboard';
 import theme from './src/global/styles/theme';
 import { StatusBar } from 'expo-status-bar';
+import { Register } from './src/screens/Register';
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
@@ -27,7 +28,8 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar style="light" backgroundColor={theme.colors.primary} />
-			<Dashboard />
+			{/* <Dashboard /> */}
+			<Register />
 		</ThemeProvider>
 	);
 }

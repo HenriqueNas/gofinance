@@ -6,14 +6,15 @@ export default {
 		secondary_light: 'rgba(255, 135, 44, 0.3)',
 
 		success: '#12A454',
-		success_light: 'rgba(18, 164, 84, 0.5)',
+		success_light: 'rgba(18, 164, 84, 0.2)',
 
 		warn: '#E83F5B',
-		warn_light: 'rgba(232, 63, 91, 0.5)',
+		warn_light: 'rgba(232, 63, 91, 0.2)',
 
 		shape: '#FFFFFF',
 		title: '#363F5F',
 		text: '#969CB3',
+		text_dark: '#000000',
 		background: '#F0F2F5',
 	},
 

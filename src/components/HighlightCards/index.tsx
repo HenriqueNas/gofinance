@@ -53,21 +53,24 @@ interface CardsProps {
 
 type TypeCardsProps = CardsProps & CardsType;
 
-function Card({ value, lastTransaction, type }: TypeCardsProps) {
-	const title = {
-		income: 'Entradas',
-		outcome: 'Saídas',
-		total: 'Total',
-	};
+const title = {
+	income: 'Entradas',
+	outcome: 'Saídas',
+	total: 'Total',
+};
 
+const iconName = {
+	income: 'arrow-up-circle',
+	outcome: 'arrow-down-circle',
+	total: 'dollar-sign',
+};
+
+function Card({ value, lastTransaction, type }: TypeCardsProps) {
 	return (
 		<Container type={type}>
 			<Header>
 				<Title type={type}>{title[type]}</Title>
-				<Icon
-					name={type === 'total' ? 'dollar-sign' : 'arrow-up-circle'}
-					type={type}
-				/>
+				<Icon name={iconName[type]} type={type} />
 			</Header>
 			<View>
 				<Amount type={type}>R$ {value}</Amount>

@@ -17,15 +17,17 @@ interface Category {
 }
 
 interface CardProps {
-	data: TransactionProps;
+	data: TransactionCardProps;
 }
 
-export interface TransactionProps {
-	type: 'income' | 'outcome';
+export type TransactionType = 'income' | 'outcome';
+
+export interface TransactionCardProps {
+	type: TransactionType;
 	title: string;
 	amount: string;
-	category: Category;
 	date: string;
+	category: Category;
 }
 
 export function TransactionCard({ data }: CardProps) {
@@ -33,7 +35,9 @@ export function TransactionCard({ data }: CardProps) {
 		<Container>
 			<Title>{data.title}</Title>
 
-			<Amount>R$ {data.amount}</Amount>
+			<Amount type={data.type}>
+				{data.type === 'outcome' && '-'} R$ {data.amount}
+			</Amount>
 
 			<Footer>
 				<Category>

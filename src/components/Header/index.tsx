@@ -1,23 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
 
-import { Container, Div, Picture, Greeting, Name, SignOut } from './styles';
+import { Container, Title } from './styles';
 
-export function Header() {
+interface HeaderProps {
+	title: string;
+}
+
+export function Header({ title }: HeaderProps) {
 	return (
 		<Container>
-			<Div>
-				<Picture
-					source={{
-						uri: 'https://avatars.githubusercontent.com/u/51311423?v=4',
-					}}
-				/>
-				<View>
-					<Greeting>Olá,</Greeting>
-					<Name>Henrique</Name>
-				</View>
-			</Div>
-			<SignOut />
+			<Title>{title}</Title>
 		</Container>
 	);
 }

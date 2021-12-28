@@ -1,9 +1,10 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
+
 import { HighlightCards } from '../../components/HighlightCards';
 import {
 	TransactionCard,
-	TransactionProps,
+	TransactionCardProps,
 } from '../../components/TransactionCard';
 
 import theme from '../../global/styles/theme';
@@ -21,9 +22,14 @@ import {
 	TransactionsList,
 } from './styles';
 
+export interface DataListProps extends TransactionCardProps {
+	id: string;
+}
+
 export function Dashboard() {
-	const transactionData: TransactionProps[] = [
+	const transactionData: DataListProps[] = [
 		{
+			id: '1',
 			type: 'income',
 			title: 'Desenvolvimento de site',
 			amount: '12.000,00',
@@ -34,6 +40,7 @@ export function Dashboard() {
 			},
 		},
 		{
+			id: '2',
 			type: 'outcome',
 			title: 'Hamburgueria Pizzy',
 			amount: '59,00',
@@ -41,6 +48,17 @@ export function Dashboard() {
 			category: {
 				name: 'Alimentação',
 				icon: 'coffee',
+			},
+		},
+		{
+			id: '3',
+			type: 'outcome',
+			title: 'Aluguel Apartamento',
+			amount: '1600,00',
+			date: new Date().toLocaleDateString('pt-BR'),
+			category: {
+				name: 'Alimentação',
+				icon: 'shopping-bag',
 			},
 		},
 	];
@@ -77,13 +95,10 @@ export function Dashboard() {
 
 					<TransactionsList
 						data={transactionData}
+						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
-							<TransactionCard data={item as TransactionProps} />
+							<TransactionCard data={item} />
 						)}
-						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{
-							paddingBottom: 24,
-						}}
 					/>
 				</Transaction>
 			</Container>

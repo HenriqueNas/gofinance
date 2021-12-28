@@ -16,12 +16,6 @@ const textColor = {
 	total: theme.colors.shape,
 };
 
-const backgroundColor = {
-	income: theme.colors.shape,
-	outcome: theme.colors.shape,
-	total: theme.colors.secondary,
-};
-
 export const Container = styled.View<CardsType>`
 	justify-content: space-between;
 
