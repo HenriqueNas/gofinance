@@ -25,8 +25,9 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 	padding: 18px;
 
 	border-radius: 5px;
-	border: ${({ isActive }) =>
-		isActive ? '0px' : `1px solid ${theme.colors.text}`};
+	border-style: solid;
+	border-color: ${theme.colors.text};
+	border-width: ${({ isActive }) => (isActive ? 0 : 1.5)}px;
 
 	background-color: ${({ isActive, type }) =>
 		isActive ? backgroundColor[type] : theme.colors.background};
