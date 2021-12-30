@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { RectButton } from 'react-native-gesture-handler';
 
 import { TransactionType } from '../../TransactionCard';
 import theme from '../../../global/styles/theme';
@@ -20,9 +21,8 @@ const backgroundColor = {
 	outcome: theme.colors.warn_light,
 };
 
-export const Container = styled.TouchableOpacity<ContainerProps>`
+export const Container = styled.View<ContainerProps>`
 	width: 48%;
-	padding: 18px;
 
 	border-radius: 5px;
 	border-style: solid;
@@ -31,10 +31,14 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 
 	background-color: ${({ isActive, type }) =>
 		isActive ? backgroundColor[type] : theme.colors.background};
+`;
 
+export const Button = styled(RectButton)`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+
+	padding: 18px;
 `;
 
 export const Title = styled.Text`

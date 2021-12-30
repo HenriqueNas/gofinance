@@ -1,8 +1,10 @@
 import styled from 'styled-components/native';
+
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import { CardsType } from '.';
+
 import theme from '../../global/styles/theme';
+import { CardsType } from '.';
 
 const iconColor = {
 	income: theme.colors.success,

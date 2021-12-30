@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { HighlightCards } from '../../components/HighlightCards';
 import {
@@ -7,19 +8,19 @@ import {
 	TransactionCardProps,
 } from '../../components/TransactionCard';
 
-import theme from '../../global/styles/theme';
 import {
 	HeaderWrapper,
 	User,
 	Picture,
 	Greeting,
 	Name,
-	SignOut,
+	LogoutIcon,
 	Header,
 	Container,
 	Transaction,
 	Title,
 	TransactionsList,
+	Button,
 } from './styles';
 
 export interface DataListProps extends TransactionCardProps {
@@ -27,6 +28,8 @@ export interface DataListProps extends TransactionCardProps {
 }
 
 export function Dashboard() {
+	const theme = useTheme();
+
 	const transactionData: DataListProps[] = [
 		{
 			id: '1',
@@ -80,7 +83,10 @@ export function Dashboard() {
 								<Name>Henrique</Name>
 							</View>
 						</User>
-						<SignOut name="power" />
+
+						<Button onPress={() => {}}>
+							<LogoutIcon />
+						</Button>
 					</Header>
 				</HeaderWrapper>
 

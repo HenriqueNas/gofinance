@@ -1,15 +1,15 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 import { Container, Category, Title, Icon } from './styles';
 
-interface SelectProps {
+interface SelectProps extends RectButtonProps {
 	title: string;
 	icon: string;
-	onPress: () => void;
 }
 
-export function SelectInput({ title, icon, onPress }: SelectProps) {
+export function SelectInput({ title, icon, ...rest }: SelectProps) {
 	return (
-		<Container onPress={onPress}>
+		<Container {...rest}>
 			<Category>
 				<Icon name={icon} />
 				<Title>{title}</Title>
