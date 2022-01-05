@@ -12,7 +12,7 @@ import {
 
 interface CardsData {
 	value: string;
-	date: string;
+	date: Date[];
 }
 export interface HighlightCardsProps {
 	income: CardsData;
@@ -27,21 +27,9 @@ export function HighlightCards({
 }: HighlightCardsProps) {
 	return (
 		<ScrollCards>
-			<Card
-				type="income"
-				value={income.value ?? 'R$ 0,00'}
-				date={income.date ?? ''}
-			/>
-			<Card
-				type="outcome"
-				value={outcome.value ?? 'R$ 0,00'}
-				date={outcome.date ?? ''}
-			/>
-			<Card
-				type="total"
-				value={total.value ?? 'R$ 0,00'}
-				date={total.date ?? ''}
-			/>
+			<Card type="income" value={income.value} date={income.date} />
+			<Card type="outcome" value={outcome.value} date={outcome.date} />
+			<Card type="total" value={total.value} date={total.date} />
 		</ScrollCards>
 	);
 }
@@ -61,6 +49,13 @@ const iconName = {
 };
 
 function Card({ value, date, type }: CardsDataWithType) {
+	function getFormatterLastTransaction() {
+		const monthName = date[0].toLocaleString('pt-BR', { month: 'long' });
+		return type === 'total'
+			? `${date[0].getDate()} à ${date[1].getDate()} de ${monthName}`
+			: `Última entrada dia ${date[0].getDate()} de ${monthName}`;
+	}
+
 	return (
 		<Container type={type}>
 			<Header>
@@ -68,8 +63,10 @@ function Card({ value, date, type }: CardsDataWithType) {
 				<Icon name={iconName[type]} type={type} />
 			</Header>
 			<View>
-				<Amount type={type}>R$ {value}</Amount>
-				<LastTransaction type={type}>{date}</LastTransaction>
+				<Amount type={type}>{value}</Amount>
+				<LastTransaction type={type}>
+					{getFormatterLastTransaction()}
+				</LastTransaction>
 			</View>
 		</Container>
 	);

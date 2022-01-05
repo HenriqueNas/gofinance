@@ -11,6 +11,7 @@ import {
 import {
 	TransactionCard,
 	TransactionCardProps,
+	TransactionType,
 } from '../../components/TransactionCard';
 
 import {
@@ -50,6 +51,13 @@ export function Dashboard() {
 		let incomeTotal = 0;
 		let outcomeTotal = 0;
 
+		function toBRLCurrency(value: number): string {
+			return value.toLocaleString('pt-BR', {
+				style: 'currency',
+				currency: 'BRL',
+			});
+		}
+
 		const transactionFormatted: TransactionProps[] = parsedData.map(
 			(item: TransactionProps) => {
 				if (item.type === 'income') {
@@ -58,10 +66,7 @@ export function Dashboard() {
 					outcomeTotal += Number(item.amount);
 				}
 
-				const amount = Number(item.amount).toLocaleString('pt-BR', {
-					style: 'currency',
-					currency: 'BRL',
-				});
+				const amount = toBRLCurrency(Number(item.amount));
 
 				const date = Intl.DateTimeFormat('pt-BR', {
 					day: '2-digit',
@@ -80,33 +85,57 @@ export function Dashboard() {
 			}
 		);
 
-		function toBRLCurrency(value: number): string {
-			return value.toLocaleString('pt-BR', {
-				style: 'currency',
-				currency: 'BRL',
-			});
+		function getDateLastTransaction(type: TransactionType) {
+			const maxTimeStamp = Math.max.apply(
+				Math,
+				parsedData
+					.filter((transaction) => transaction.type === type)
+					.map((transaction) => new Date(transaction.date).getTime())
+			);
+
+			return new Date(maxTimeStamp);
 		}
+
+		function getTotalTransactionDateRange() {
+			const minTimeStamp = Math.min.apply(
+				Math,
+				parsedData.map((transaction) =>
+					new Date(transaction.date).getTime()
+				)
+			);
+
+			const maxTimeStamp = Math.max.apply(
+				Math,
+				parsedData.map((transaction) =>
+					new Date(transaction.date).getTime()
+				)
+			);
+
+			return [new Date(minTimeStamp), new Date(maxTimeStamp)];
+		}
+
+		const lastTransIncome = getDateLastTransaction('income');
+		const lastTransOutcome = getDateLastTransaction('outcome');
 
 		setTransactions(transactionFormatted);
 		setHighlightCardData({
 			income: {
 				value: toBRLCurrency(incomeTotal),
-				date: '12/12',
+				date: [lastTransIncome],
 			},
 			outcome: {
 				value: toBRLCurrency(outcomeTotal),
-				date: '12/12',
+				date: [lastTransOutcome],
 			},
 			total: {
 				value: toBRLCurrency(incomeTotal - outcomeTotal),
-				date: '12/12',
+				date: getTotalTransactionDateRange(),
 			},
 		});
 		setIsLoading(false);
 	}
 
 	useEffect(() => {
-		console.log('hello');
 		loadTransactions();
 	}, []);
 

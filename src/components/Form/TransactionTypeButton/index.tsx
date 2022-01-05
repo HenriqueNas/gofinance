@@ -1,9 +1,8 @@
 import React from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
+import { TransactionType } from '../../TransactionCard';
 
 import { Container, Title, Icon, Button } from './styles';
-
-export type TransactionType = 'income' | 'outcome';
 
 interface ButtonProps extends RectButtonProps {
 	type: TransactionType;
