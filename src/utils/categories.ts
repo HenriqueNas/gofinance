@@ -1,11 +1,11 @@
-export interface CategoryProps {
+export interface CategoryInterface {
 	key: string;
 	name: string;
 	icon: string;
 	color: string;
 }
 
-export const categories: CategoryProps[] = [
+export const categories: CategoryInterface[] = [
 	{
 		key: 'purchases',
 		name: 'Compras',

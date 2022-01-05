@@ -8,7 +8,7 @@ import {
 	RectButton,
 } from 'react-native-gesture-handler';
 
-import { CategoryProps } from '../../../utils/categories';
+import { CategoryInterface } from '../../../utils/categories';
 
 interface Category {
 	isActive: boolean;
@@ -20,8 +20,8 @@ export const Container = styled(GestureHandlerRootView)`
 
 export const CategoriesList = styled(
 	FlatList as new (
-		pros: FlatListProps<CategoryProps>
-	) => FlatList<CategoryProps>
+		pros: FlatListProps<CategoryInterface>
+	) => FlatList<CategoryInterface>
 )`
 	flex: 1;
 `;

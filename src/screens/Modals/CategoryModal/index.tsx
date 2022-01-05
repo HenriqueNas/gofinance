@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { categories, CategoryProps } from '../../../utils/categories';
+import { categories, CategoryInterface } from '../../../utils/categories';
+import { CategoryProps } from '../../../components/TransactionCard';
 import { Button } from '../../../components/Form/Button';
 import { Header } from '../../../components/Header';
 
@@ -14,15 +15,9 @@ import {
 	Footer,
 } from './styles';
 
-export type Category = {
-	key: string;
-	name: string;
-	icon: string;
-};
-
 interface ModalProps {
-	category: Category;
-	setCategory: (category: Category) => void;
+	category: CategoryProps;
+	setCategory: (category: CategoryProps) => void;
 	closeSelectCategory: () => void;
 }
 
@@ -31,7 +26,7 @@ export function CategoryModal({
 	setCategory,
 	closeSelectCategory,
 }: ModalProps) {
-	function handleSetCategory(item: CategoryProps): void {
+	function handleSetCategory(item: CategoryInterface): void {
 		setCategory({
 			name: item.name,
 			key: item.key,

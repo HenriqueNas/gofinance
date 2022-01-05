@@ -11,9 +11,10 @@ import {
 	Date,
 } from './styles';
 
-interface Category {
+export interface CategoryProps {
+	key: string;
 	name: string;
-	icon: string;
+	icon?: string;
 }
 
 interface CardProps {
@@ -27,7 +28,7 @@ export interface TransactionCardProps {
 	title: string;
 	amount: string;
 	date: string;
-	category: Category;
+	category: CategoryProps;
 }
 
 export function TransactionCard({ data }: CardProps) {

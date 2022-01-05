@@ -1,41 +1,49 @@
 import React, { useState } from 'react';
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
+
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Header } from '../../components/Header';
 import { Button } from '../../components/Form/Button';
 import { InputForm } from '../../components/Form/InputForm';
 import { SelectInput } from '../../components/Form/SelectInput';
-import { Category, CategoryModal } from '../Modals/CategoryModal';
+import { CategoryModal } from '../Modals/CategoryModal';
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 
 import { Container, Form, Fields, TransactionsTypes } from './styles';
+import { TransactionProps } from '../Dashboard';
+import { CategoryProps } from '../../components/TransactionCard';
 
 interface FormData {
-	name: string;
+	title: string;
 	amount: string;
 }
 
 const schema = Yup.object().shape({
-	name: Yup.string().required('Nome é obrigatório'),
+	title: Yup.string().required('Nome é obrigatório'),
 	amount: Yup.number()
 		.typeError('Informe um valor numérico')
 		.positive('O valor precisa ser positivo'),
 });
 
 export function Register() {
+	const navigation = useNavigation();
+	const dataKey = '@gofinance:transactions';
+
 	const [transactionType, setTransactionType] = useState<
 		'income' | 'outcome' | null
 	>(null);
 
 	const [categoryModal, setCategoryModal] = useState(false);
-	const [category, setCategory] = useState<Category>({
+	const [category, setCategory] = useState<CategoryProps>({
 		key: 'category',
 		name: 'Categoria',
-		icon: '',
 	});
 
 	function handleOpenCategoryModal(): void {
@@ -50,7 +58,7 @@ export function Register() {
 		setTransactionType(type);
 	}
 
-	function handleRegister(form: FormData) {
+	async function handleRegister(form: FormData) {
 		if (!transactionType) {
 			return Alert.alert('Selecione o tipo da transação');
 		}
@@ -59,20 +67,42 @@ export function Register() {
 			return Alert.alert('Selecione uma categoria para a transação');
 		}
 
-		const data = {
-			name: form.name,
+		const newRegister: TransactionProps = {
+			id: String(uuid.v4()),
+			title: form.title,
 			amount: form.amount,
 			type: transactionType,
-			category: category.key,
+			category,
+			date: new Date(),
 		};
 
-		console.log(data);
+		try {
+			const jsonRegisters = await AsyncStorage.getItem(dataKey);
+			const registers = jsonRegisters ? JSON.parse(jsonRegisters) : [];
+
+			const data = [...registers, newRegister];
+
+			await AsyncStorage.setItem(dataKey, JSON.stringify(data));
+		} catch (error) {
+			console.error(error);
+			Alert.alert('Não foi possível registrar sua operação');
+		} finally {
+			reset();
+			setTransactionType(null);
+			setCategory({
+				key: 'category',
+				name: 'Categoria',
+			});
+
+			navigation.navigate('Listagem');
+		}
 	}
 
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
@@ -85,12 +115,12 @@ export function Register() {
 				<Form>
 					<Fields>
 						<InputForm
-							name="name"
+							name="title"
 							control={control}
 							placeholder="Nome"
 							autoCorrect={false}
 							autoCapitalize="sentences"
-							error={errors.name && errors.name.message}
+							error={errors.title && errors.title.message}
 						/>
 						<InputForm
 							name="amount"

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { FlatList, FlatListProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { DataListProps } from '.';
+import { TransactionProps } from '.';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
@@ -74,11 +74,17 @@ export const Title = styled.Text`
 
 export const TransactionsList = styled(
 	FlatList as new (
-		pros: FlatListProps<DataListProps>
-	) => FlatList<DataListProps>
+		pros: FlatListProps<TransactionProps>
+	) => FlatList<TransactionProps>
 ).attrs({
 	showsVerticalScrollIndicator: false,
 	contentContainerStyle: {
 		paddingBottom: 24,
 	},
 })``;
+
+export const LoadContainer = styled.View`
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+`;

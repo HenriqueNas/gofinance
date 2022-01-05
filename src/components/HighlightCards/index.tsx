@@ -10,48 +10,43 @@ import {
 	ScrollCards,
 } from './styles';
 
-interface HightlightCardsProps {
-	income: CardsProps;
-	outcome: CardsProps;
-	total: CardsProps;
+interface CardsData {
+	value: string;
+	date: string;
+}
+export interface HighlightCardsProps {
+	income: CardsData;
+	outcome: CardsData;
+	total: CardsData;
 }
 
 export function HighlightCards({
 	income,
 	outcome,
 	total,
-}: HightlightCardsProps) {
+}: HighlightCardsProps) {
 	return (
 		<ScrollCards>
 			<Card
 				type="income"
-				value={income.value}
-				lastTransaction={income.lastTransaction}
+				value={income.value ?? 'R$ 0,00'}
+				date={income.date ?? ''}
 			/>
 			<Card
 				type="outcome"
-				value={outcome.value}
-				lastTransaction={outcome.lastTransaction}
+				value={outcome.value ?? 'R$ 0,00'}
+				date={outcome.date ?? ''}
 			/>
 			<Card
 				type="total"
-				value={total.value}
-				lastTransaction={total.lastTransaction}
+				value={total.value ?? 'R$ 0,00'}
+				date={total.date ?? ''}
 			/>
 		</ScrollCards>
 	);
 }
 
-export interface CardsType {
-	type: 'income' | 'outcome' | 'total';
-}
-
-interface CardsProps {
-	value: number;
-	lastTransaction: Date;
-}
-
-type TypeCardsProps = CardsProps & CardsType;
+type CardsDataWithType = CardsData & { type: 'income' | 'outcome' | 'total' };
 
 const title = {
 	income: 'Entradas',
@@ -65,7 +60,7 @@ const iconName = {
 	total: 'dollar-sign',
 };
 
-function Card({ value, lastTransaction, type }: TypeCardsProps) {
+function Card({ value, date, type }: CardsDataWithType) {
 	return (
 		<Container type={type}>
 			<Header>
@@ -74,9 +69,7 @@ function Card({ value, lastTransaction, type }: TypeCardsProps) {
 			</Header>
 			<View>
 				<Amount type={type}>R$ {value}</Amount>
-				<LastTransaction type={type}>
-					{lastTransaction.toLocaleDateString('pt-BR')}
-				</LastTransaction>
+				<LastTransaction type={type}>{date}</LastTransaction>
 			</View>
 		</Container>
 	);
