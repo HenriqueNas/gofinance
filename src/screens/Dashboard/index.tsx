@@ -30,6 +30,7 @@ import {
 	LoadContainer,
 } from './styles';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAuth } from '../../context/auth';
 
 export interface TransactionProps extends TransactionCardProps {
 	id: string;
@@ -38,6 +39,7 @@ export interface TransactionProps extends TransactionCardProps {
 export function Dashboard() {
 	const dataKey = '@gofinance:transactions';
 	const theme = useTheme();
+	const { user, logOut } = useAuth();
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState<TransactionProps[]>([]);
@@ -159,16 +161,16 @@ export function Dashboard() {
 								<User>
 									<Picture
 										source={{
-											uri: 'https://avatars.githubusercontent.com/u/51311423?v=4',
+											uri: user.photo ?? '',
 										}}
 									/>
 									<View>
 										<Greeting>Olá,</Greeting>
-										<Name>Henrique</Name>
+										<Name>{user.name}</Name>
 									</View>
 								</User>
 
-								<Button onPress={() => {}}>
+								<Button onPress={logOut}>
 									<LogoutIcon />
 								</Button>
 							</Header>

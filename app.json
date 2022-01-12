@@ -1,7 +1,9 @@
 {
   "expo": {
     "name": "gofinance",
+		"owner": "henriquenas",
     "slug": "gofinance",
+    "scheme": "gofinance",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

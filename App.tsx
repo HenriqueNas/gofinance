@@ -14,6 +14,8 @@ import {
 import { ThemeProvider } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
+
+import { AuthProvider } from './src/context/auth';
 import theme from './src/global/styles/theme';
 
 export default function App() {
@@ -34,7 +36,9 @@ export default function App() {
 					style="light"
 					backgroundColor={theme.colors.primary}
 				/>
-				<AppRoutes />
+				<AuthProvider>
+					<AppRoutes />
+				</AuthProvider>
 			</NavigationContainer>
 		</ThemeProvider>
 	);

@@ -43,7 +43,9 @@ export const Greeting = styled.Text`
 	font-size: ${RFValue(18)}px;
 `;
 
-export const Name = styled.Text`
+export const Name = styled.Text.attrs({
+	numberOfLines: 1,
+})`
 	font-family: ${({ theme }) => theme.fonts.bold};
 	color: ${({ theme }) => theme.colors.shape};
 	font-size: ${RFValue(18)}px;
