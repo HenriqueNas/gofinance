@@ -37,9 +37,9 @@ export interface TransactionProps extends TransactionCardProps {
 }
 
 export function Dashboard() {
-	const dataKey = '@gofinance:transactions';
-	const theme = useTheme();
 	const { user, logOut } = useAuth();
+	const dataKey = `@gofinance:transactions:@user_id:${user.id}`;
+	const theme = useTheme();
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState<TransactionProps[]>([]);
@@ -159,11 +159,7 @@ export function Dashboard() {
 						<HeaderWrapper>
 							<Header>
 								<User>
-									<Picture
-										source={{
-											uri: user.photo ?? '',
-										}}
-									/>
+									<Picture source={{ uri: user.photo }} />
 									<View>
 										<Greeting>Olá,</Greeting>
 										<Name>{user.name}</Name>

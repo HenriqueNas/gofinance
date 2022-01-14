@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Platform } from 'react-native';
 import { useAuth } from '../../context/auth';
 
@@ -18,14 +18,23 @@ import {
 } from './styles';
 
 export function Login() {
-	const { loginWithGoogle } = useAuth();
+	const { loginWithGoogle, loginWithApple } = useAuth();
 
-	function handleLoginWithGoogle() {
+	async function handleLoginWithGoogle() {
 		try {
-			const response = loginWithGoogle();
+			return await loginWithGoogle();
 		} catch (error) {
 			console.log(error);
-			Alert.alert('Não foi possível fazer login com conta google');
+			Alert.alert('Não foi possível fazer login com sua conta Google');
+		}
+	}
+
+	async function handleLoginWithApple() {
+		try {
+			return await loginWithApple();
+		} catch (error) {
+			console.log(error);
+			Alert.alert('Não foi possível fazer login com sua conta Apple');
 		}
 	}
 
@@ -43,14 +52,14 @@ export function Login() {
 			</Header>
 
 			<Footer>
-				<LoginButton onPress={() => handleLoginWithGoogle()}>
+				<LoginButton onPress={handleLoginWithGoogle}>
 					<GoogleIcon />
 					<Divider />
 					<ButtonText>Entrar com Google</ButtonText>
 				</LoginButton>
 
 				{Platform.OS === 'ios' && (
-					<LoginButton>
+					<LoginButton onPress={handleLoginWithApple}>
 						<AppleIcon />
 						<Divider />
 						<ButtonText>Entrar com Apple</ButtonText>

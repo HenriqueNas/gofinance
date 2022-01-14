@@ -50,10 +50,15 @@ const iconName = {
 
 function Card({ value, date, type }: CardsDataWithType) {
 	function getFormatterLastTransaction() {
+		const valueNumber = Number(value.replace(/\D/g, ''));
+		if (valueNumber === 0) return 'Sem operações';
+
 		const monthName = date[0].toLocaleString('pt-BR', { month: 'long' });
 		return type === 'total'
 			? `${date[0].getDate()} à ${date[1].getDate()} de ${monthName}`
-			: `Última entrada dia ${date[0].getDate()} de ${monthName}`;
+			: `Última ${
+					type === 'income' ? 'entrada' : 'saída'
+			  }  dia ${date[0].getDate()} de ${monthName}`;
 	}
 
 	return (

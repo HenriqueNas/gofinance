@@ -13,12 +13,7 @@ import { Login } from '../screens/Login';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
-	const { isAuth } = useAuth();
 	const theme = useTheme();
-
-	if (!isAuth) {
-		return <Login />;
-	}
 
 	return (
 		<Navigator

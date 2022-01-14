@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addMonths, format, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+import { useAuth } from '../../context/auth';
+
 import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -37,6 +39,7 @@ export interface CategoryData {
 }
 
 export function Resume() {
+	const { user } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>(
@@ -46,7 +49,7 @@ export function Resume() {
 	async function loadTransactions() {
 		setIsLoading(true);
 
-		const dataKey = '@gofinance:transactions';
+		const dataKey = `@gofinance:transactions:@user_id:${user.id}`;
 		const jsonData = await AsyncStorage.getItem(dataKey);
 		const parsedData: TransactionProps[] = JSON.parse(jsonData) ?? [];
 

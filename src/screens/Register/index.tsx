@@ -3,8 +3,9 @@ import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import uuid from 'react-native-uuid';
+import { useAuth } from '../../context/auth';
 
+import uuid from 'react-native-uuid';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -34,7 +35,8 @@ const schema = Yup.object().shape({
 
 export function Register() {
 	const navigation = useNavigation();
-	const dataKey = '@gofinance:transactions';
+	const { user } = useAuth();
+	const dataKey = `@gofinance:transactions:@user_id:${user.id}`;
 
 	const [transactionType, setTransactionType] = useState<
 		'income' | 'outcome' | null
